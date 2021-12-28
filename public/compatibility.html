@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>WSHS Compatability</title>
+    <link href="styleComp.css" rel="stylesheet" type="text/css" />
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-12KPSHCW03"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-12KPSHCW03');
+		</script>
+  </head>
+  <body>
+		<header>
+			<h1>The Root Vegetagble</h1>
+			<h3>Your #1 reliable news source for all things West Seattle High School. </h3>
+
+		</header>
+		<div class="navbar">
+			<a href="../">Home</a>
+			<a href="https://www.instagram.com/therootvegetable.wshs/">Instagram</a>
+			<a href="/compatibility.html" class="active">Compatabality</a>
+		</div>
+		<div class="mainComp">
+			<form class="inputBox" id="compForm">
+				<h1>WSHS Compatibility Tester</h1>
+				<h2>Enter your name and your crushes to see how compatible your are</h2>
+				<div class="inputsNotCollom">
+					<label for="name1">Your Name</label>
+					<input type="text" id="name1" name="name1">
+					<span class="emoji">❤️</span>
+					<label for="name2">Their Name</label>
+					<input type="text" id="name2" name="name2">
+				</div>
+				<input type="submit" id="compSubButton" onclick="calculateComp()" value="Measure Compatibility">
+				<div class="single-chart">
+					<svg viewBox="0 0 36 36" class="circular-chart orange">
+						<path class="circle-bg"
+							d="M18 2.0845
+								a 15.9155 15.9155 0 0 1 0 31.831
+								a 15.9155 15.9155 0 0 1 0 -31.831"
+						/>
+						<path id="changeStroke" class="circle"
+							stroke-dasharray="0, 100"
+							d="M18 2.0845
+								a 15.9155 15.9155 0 0 1 0 31.831
+								a 15.9155 15.9155 0 0 1 0 -31.831"
+						/>
+						<text x="18" y="20.35" class="percentage" id="resultBox">0%</text>
+					</svg>
+				</div>
+			</form>
+			
+			<p class="disClaim">disclaimer: your data and inputs are not private on this website</br>like we will know who your crush is</p>
+		</div>
+		<script>
+			var form = document.getElementById("compForm");
+			function handleForm(event) { event.preventDefault(); } 
+			form.addEventListener('submit', handleForm);
+			
+			function calculateComp() {
+				let name1 = document.getElementById('name1').value;
+				let name2 = document.getElementById('name2').value;
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( "GET", "/thanks?name1="+name1+"&name2="+name2, false ); // false for synchronous request
+				xmlHttp.send(null);
+				document.getElementById("resultBox").innerHTML = xmlHttp.responseText + "%";
+				console.log(xmlHttp.responseText + ", 100")
+				document.getElementById("changeStroke").setAttribute("stroke-dasharray", (xmlHttp.responseText + ", 100"))
+				return xmlHttp.responseText;
+			}
+		</script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>
